@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.AutoMapper.Enums;
 using WebAPI.AutoMapper.Models;
 
 namespace WebAPI.AutoMapper.Controllers
@@ -17,6 +18,7 @@ namespace WebAPI.AutoMapper.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public IActionResult Post(PersonInputModel input)
         {
             //Modelo de instância sem o automapper
@@ -32,9 +34,14 @@ namespace WebAPI.AutoMapper.Controllers
             //    );
 
             //Modelo de instância com o automapper do PersonInputModel -> Person
-            var person = _mapper.Map<Person>(input);  
+            var person = _mapper.Map<Person>(input);
 
-            return Ok(input);
+            //Modelo de instância com o automapper do Person -> PersonViewModel
+            var personViewModel = _mapper.Map<PersonViewModel>(person);
+
+            //retorna o modelo de saída após a conferência do objeto cadastrado.
+            return CreatedAtAction(nameof(GetById), new { id = personViewModel.Id }, personViewModel);
+ 
         }
 
         [HttpGet("{id}")]

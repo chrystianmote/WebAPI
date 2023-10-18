@@ -5,15 +5,21 @@ namespace WebAPI.AutoMapper.Models
 {
     public class Person
     {
+        //Para uso do Automapper com propriedades de setagem privadas,
+        //preciso deixar meu construtor padrão sem parâmetros
+        protected Person()
+        {
+        }
+
         public Person(int id, string firstName, string lastName, DateTime birthDate, MaritalStatusEnum maritalStatus, string phoneNumber, string fullAddress)
         {
             Id = id;
-            FirstName = firstName;
-            LastName = lastName;
+            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
             BirthDate = birthDate;
             MaritalStatus = maritalStatus;
-            PhoneNumber = phoneNumber;
-            FullAddress = fullAddress;
+            PhoneNumber = phoneNumber ?? throw new ArgumentNullException(nameof(phoneNumber));
+            FullAddress = fullAddress ?? throw new ArgumentNullException(nameof(fullAddress));
 
             Active = true;
             CreateAt = DateTime.Now;

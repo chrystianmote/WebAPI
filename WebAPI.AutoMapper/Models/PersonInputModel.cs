@@ -1,4 +1,6 @@
-﻿namespace WebAPI.AutoMapper.Models
+﻿using WebAPI.AutoMapper.Enums;
+
+namespace WebAPI.AutoMapper.Models
 {
     public class PersonInputModel
     {
